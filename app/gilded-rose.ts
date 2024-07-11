@@ -22,6 +22,14 @@ export class GildedRose {
       let currentItem = this.items[i]
       let currentItemName = this.items[i].name
 
+      //create  new types : Aged brie, passes, sulfuras, conjured items
+
+      //get the type this.items[i] --> Aged brie, passes, sulfuras, conjured items, other
+
+      //currentItemType
+
+      //define Water of type Conjured
+
       switch(currentItemName) {
         case "Aged Brie":
           currentItem.quality += 1;
@@ -42,21 +50,22 @@ export class GildedRose {
         case "Sulfuras, Hand of Ragnaros":
           currentItem = currentItem;
           break;
-        case "Conjured Mana Cake":
-          if (currentItem.quality > 0) {
-            if (currentItem.sellIn > 0) currentItem.quality -= 2;
-            else currentItem.quality -= 4;
-          }
-          currentItem.quality = Math.max(currentItem.quality, 0);
-          currentItem.sellIn -= 1;
-          break;
         default:
-          if (currentItem.quality > 0) {
-            if (currentItem.sellIn > 0) currentItem.quality -= 1;
-            else currentItem.quality -= 2;
+          if (currentItemName.includes("Conjured")) {
+            if (currentItem.quality > 0) {
+              if (currentItem.sellIn > 0) currentItem.quality -= 2;
+              else currentItem.quality -= 4;
+            }
+            currentItem.quality = Math.max(currentItem.quality, 0);
+            currentItem.sellIn -= 1;
+          } else {
+            if (currentItem.quality > 0) {
+              if (currentItem.sellIn > 0) currentItem.quality -= 1;
+              else currentItem.quality -= 2;
+            }
+            currentItem.quality = Math.max(currentItem.quality, 0);
+            currentItem.sellIn -= 1;
           }
-          currentItem.quality = Math.max(currentItem.quality, 0);
-          currentItem.sellIn -= 1;
           break;
       }
 
