@@ -19,49 +19,95 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality = this.items[i].quality - 1
+      let currentItem = this.items[i]
+      let currentItemName = this.items[i].name
+
+      switch(currentItemName) {
+        case "Aged Brie":
+          currentItem.quality += 1;
+          currentItem.sellIn -= 1;
+          currentItem.quality = Math.min(currentItem.quality, 50);
+          break;
+        case "Backstage passes to a TAFKAL80ETC concert":
+          if (currentItem.sellIn <= 0) {
+            currentItem.quality = 0;
+            } else if (currentItem.sellIn <= 5) {
+            currentItem.quality += 3;
+            } else if (currentItem.sellIn <= 10) {
+            currentItem.quality += 2;
+            } else currentItem.quality += 1;
+          currentItem.quality = Math.min(currentItem.quality, 50);
+          currentItem.sellIn -= 1;
+          break;
+        case "Sulfuras, Hand of Ragnaros":
+          currentItem = currentItem;
+          break;
+        case "Conjured Mana Cake":
+          if (currentItem.quality > 0) {
+            if (currentItem.sellIn > 0) currentItem.quality -= 2;
+            else currentItem.quality -= 4;
+          }
+          currentItem.quality = Math.max(currentItem.quality, 0);
+          currentItem.sellIn -= 1;
+          break;
+        default:
+          if (currentItem.quality > 0) {
+            if (currentItem.sellIn > 0) currentItem.quality -= 1;
+            else currentItem.quality -= 2;
+          }
+          currentItem.quality = Math.max(currentItem.quality, 0);
+          currentItem.sellIn -= 1;
+          break;
+      }
+
+
+
+
+
+      // to do  : switch case statement
+      /*if (currentItem.name != 'Aged Brie' && currentItem.name != 'Backstage passes to a TAFKAL80ETC concert') {
+        if (currentItem.quality > 0) {
+          if (currentItem.name != 'Sulfuras, Hand of Ragnaros') {
+            currentItem.quality -= 1
           }
         }
       } else { //if the item is aged brie or backstage passes
-        if (this.items[i].quality < 50) { // 50 is the maximum value for quality possible
-          this.items[i].quality = this.items[i].quality + 1 // += 1
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].sellIn < 11) { // if the sell in days is 10 or less, quality increase by 2 per day
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1 // += 1
+        if (currentItem.quality < 50) { // 50 is the maximum value for quality possible
+          currentItem.quality += 1
+          if (currentItem.name == 'Backstage passes to a TAFKAL80ETC concert') {
+            if (currentItem.sellIn < 11) { // if the sell in days is 10 or less, quality increase by 2 per day
+              if (currentItem.quality < 50) {
+                currentItem.quality += 1
               }
             }
-            if (this.items[i].sellIn < 6) { // if the sell in days is 5 or less, quality increase by 3 per day
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1 // += 1
+            if (currentItem.sellIn < 6) { // if the sell in days is 5 or less, quality increase by 3 per day
+              if (currentItem.quality < 50) {
+                currentItem.quality += 1 
               }
             }
           }
         }
       }
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn = this.items[i].sellIn - 1; // sell in days countdown -= 1
+      if (currentItem.name != 'Sulfuras, Hand of Ragnaros') {
+        currentItem.sellIn -= 1; 
       }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != 'Aged Brie') { // if not aged brie
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') { // if not backstage passes
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') { // if not sulfuras
-                this.items[i].quality = this.items[i].quality - 1
+      if (currentItem.sellIn < 0) {
+        if (currentItem.name != 'Aged Brie') { // if not aged brie
+          if (currentItem.name != 'Backstage passes to a TAFKAL80ETC concert') { // if not backstage passes
+            if (currentItem.quality > 0) {
+              if (currentItem.name != 'Sulfuras, Hand of Ragnaros') { // if not sulfuras
+                currentItem.quality -= 1
               }
             }
           } else { // is backstage passes
-            this.items[i].quality = this.items[i].quality - this.items[i].quality // quality drops to 0 afer the concert
+            currentItem.quality = 0 
           }
         } else { // is aged brie
-          if (this.items[i].quality < 50) {
-            this.items[i].quality = this.items[i].quality + 1 // quality increases each day
+          if (currentItem.quality < 50) {
+            currentItem.quality += 1 // quality increases each day
           }
         }
-      }
+      }*/
     }
 
     return this.items;
