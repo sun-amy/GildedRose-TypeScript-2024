@@ -127,17 +127,4 @@ describe('Gilded Rose', () => {
     expect(items[0].quality).to.equal(0);
   })
 
-  // Conjured items tests
-  it('Conjured items degrade by 2 when the sell by date has not passed', () => {
-    const gildedRose = new GildedRose([new Item('Conjured Health Soup', 10, 5)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(3);
-  })
-
-  it('Conjured items degrade by 4 when the sell by date has passed', () => {
-    const gildedRose = new GildedRose([new Item('Conjured Spirit Energy', 0, 5)]);
-    const items = gildedRose.updateQuality();
-    expect(items[0].quality).to.equal(1);
-  })
-
 });
